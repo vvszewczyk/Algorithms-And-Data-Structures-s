@@ -15,6 +15,7 @@ class LinkedList
 
   public:
     LinkedList() : head(nullptr) {};
+
     ~LinkedList()
     {
         Node *curr = head;
@@ -192,6 +193,28 @@ class LinkedList
         }
     }
 
+    void reverse()
+    {
+        if (head == nullptr)
+        {
+            return;
+        }
+
+        Node *prev = nullptr;
+        Node *curr = head;
+        Node *next = nullptr;
+
+        while (curr)
+        {
+            next = curr->next;
+            curr->next = prev;
+            prev = curr;
+            curr = next;
+        }
+
+        head = prev;
+    }
+
     void printList() const
     {
         Node *curr = head;
@@ -228,5 +251,8 @@ int main()
 
     list.dropAtIndex(2);
 
+    list.printList();
+
+    list.reverse();
     list.printList();
 }

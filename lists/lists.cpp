@@ -2,6 +2,7 @@
 
 class LinkedList
 {
+  public:
     class Node
     {
       public:
@@ -9,8 +10,29 @@ class LinkedList
         Node *next;
 
         Node(int val) : value(val), next(nullptr) {};
+
+        friend std::ostream &operator<<(std::ostream &os, const Node &data)
+        {
+            if (!&data)
+            {
+                os << "Unkown node.\n";
+                return os;
+            }
+
+            os << "value: " << data.value;
+            if (data.next)
+            {
+                os << " next: " << data.next->value << "\n";
+            }
+            else
+            {
+                os << " next: nullptr\n";
+            }
+            return os;
+        }
     };
 
+  private:
     Node *head;
 
   public:
@@ -240,6 +262,36 @@ class LinkedList
         return res;
     }
 
+    Node *find(int val)
+    {
+        Node *curr = head;
+
+        while (curr)
+        {
+            if (curr->value == val)
+            {
+                return curr;
+            }
+            curr = curr->next;
+        }
+
+        return nullptr;
+    }
+
+    Node *findRecursive(Node *h, int val)
+    {
+        if (h == nullptr)
+        {
+            return h;
+        }
+        else if (h->value == val)
+        {
+            return h;
+        }
+
+        findRecursive(h->next, val);
+    }
+
     void printList() const
     {
         Node *curr = head;
@@ -257,6 +309,7 @@ class LinkedList
     {
         if (h == nullptr)
         {
+            std::cout << "\n";
             return;
         }
 
@@ -287,10 +340,11 @@ int main()
 
     list.dropAtIndex(2);
 
-    list.printList();
+    list.reverse();
+    list.printRecursive(list.getHead(), 0);
 
-    // list.reverse();
-    //  list.printRecursive(list.getHead(), 0);
     list.setHead(list.recursiveReverse(list.getHead()));
     list.printList();
+
+    std::cout << *(list.findRecursive(list.getHead(), 62136));
 }

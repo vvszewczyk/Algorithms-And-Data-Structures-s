@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vector>
 
 class LinkedList
 {
@@ -136,6 +137,44 @@ class LinkedList
             // Walked through all list -> position is bigger than list size -> add on the end
             curr->next = newNode;
         }
+    }
+
+    void pushSorted(int value)
+    {
+        Node *newNode = new Node(value);
+        Node *curr = head;
+
+        // Push front
+        if (head == nullptr || head->value > value)
+        {
+            newNode->next = head;
+            head = newNode;
+            return;
+        }
+
+        while (curr->next)
+        {
+            if ((curr->value < value) && (curr->next->value > value)) // Push between curr and next
+            {
+                Node *pom = curr->next;
+                curr->next = newNode;
+                newNode->next = pom;
+                return;
+            }
+            else if ((curr->value == value) || (curr->next->value == value)) // Push between curr and next
+            {
+                Node *pom = curr->next;
+                curr->next = newNode;
+                newNode->next = pom;
+                return;
+            }
+            curr = curr->next;
+        }
+
+        // Push back if we went through the entire list without success
+        curr->next = newNode;
+        newNode->next = nullptr;
+        return;
     }
 
     void dropFront()
@@ -292,6 +331,29 @@ class LinkedList
         findRecursive(h->next, val);
     }
 
+    std::vector<Node *> findAll(int val)
+    {
+        std::vector<Node *> result;
+
+        if (head == nullptr)
+        {
+            return result;
+        }
+
+        Node *curr = head;
+
+        while (curr)
+        {
+            if (curr->value == val)
+            {
+                result.push_back(curr);
+            }
+            curr = curr->next;
+        }
+
+        return result;
+    }
+
     void printList() const
     {
         Node *curr = head;
@@ -331,8 +393,13 @@ int main()
     list.pushAtIndex(1000, 32131);
 
     list.pushFront(66);
+    list.pushFront(2);
     list.pushFront(21);
     list.pushFront(33);
+    list.pushFront(2);
+    list.pushFront(2);
+    list.pushFront(2);
+    list.pushFront(2);
 
     list.dropFront();
     list.dropBack();
@@ -347,4 +414,24 @@ int main()
     list.printList();
 
     std::cout << *(list.findRecursive(list.getHead(), 62136));
+
+    std::vector<LinkedList::Node *> res = list.findAll(2);
+
+    for (auto &a : res)
+    {
+        std::cout << *a;
+    }
+
+    LinkedList sorted;
+    sorted.pushBack(1);
+    sorted.pushBack(3);
+    sorted.pushBack(4);
+    sorted.pushBack(7);
+
+    sorted.printList();
+    sorted.pushSorted(1);
+    sorted.pushSorted(-5);
+    sorted.pushSorted(6);
+    sorted.pushSorted(10);
+    sorted.printList();
 }

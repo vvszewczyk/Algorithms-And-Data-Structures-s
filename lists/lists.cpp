@@ -39,6 +39,10 @@ class LinkedList
   public:
     LinkedList() : head(nullptr) {};
 
+    LinkedList(const LinkedList &) = delete;
+
+    LinkedList &operator=(const LinkedList &) = delete;
+
     ~LinkedList()
     {
         Node *curr = head;
@@ -152,16 +156,17 @@ class LinkedList
             return;
         }
 
+        // Push between elements
         while (curr->next)
         {
-            if ((curr->value < value) && (curr->next->value > value)) // Push between curr and next
+            if ((curr->value < value) && (curr->next->value > value))
             {
                 Node *pom = curr->next;
                 curr->next = newNode;
                 newNode->next = pom;
                 return;
             }
-            else if ((curr->value == value) || (curr->next->value == value)) // Push between curr and next
+            else if ((curr->value == value) || (curr->next->value == value))
             {
                 Node *pom = curr->next;
                 curr->next = newNode;
@@ -264,6 +269,41 @@ class LinkedList
         }
     }
 
+    void dropEveryOther()
+    {
+        if (head == nullptr)
+        {
+            return;
+        }
+        else
+        {
+            std::size_t counter = 0;
+            Node *curr = head;
+
+            while (curr && curr->next)
+            {
+                Node *toDelete = curr->next;
+                curr->next = curr->next->next;
+                delete toDelete;
+
+                curr = curr->next;
+            }
+        }
+    }
+
+    void dropEveryOtherRecursive(Node *h)
+    {
+        if (h == nullptr || h->next == nullptr)
+        {
+            return;
+        }
+
+        Node *toDelete = h->next;
+        h->next = h->next->next;
+        delete toDelete;
+        dropEveryOtherRecursive(h->next);
+    }
+
     void reverse()
     {
         if (head == nullptr)
@@ -301,7 +341,7 @@ class LinkedList
         return res;
     }
 
-    Node *find(int val)
+    Node *find(int val) const
     {
         Node *curr = head;
 
@@ -317,7 +357,7 @@ class LinkedList
         return nullptr;
     }
 
-    Node *findRecursive(Node *h, int val)
+    Node *findRecursive(Node *h, int val) const
     {
         if (h == nullptr)
         {
@@ -328,7 +368,7 @@ class LinkedList
             return h;
         }
 
-        findRecursive(h->next, val);
+        return findRecursive(h->next, val);
     }
 
     std::vector<Node *> findAll(int val)
@@ -352,6 +392,30 @@ class LinkedList
         }
 
         return result;
+    }
+
+    Node *merge(Node *secondHead)
+    {
+        if (head == nullptr)
+        {
+            head = secondHead;
+            return head;
+        }
+
+        if (secondHead == nullptr)
+        {
+            return head;
+        }
+
+        Node *curr = head;
+
+        while (curr->next)
+        {
+            curr = curr->next;
+        }
+
+        curr->next = secondHead;
+        return head;
     }
 
     void printList() const
@@ -434,4 +498,13 @@ int main()
     sorted.pushSorted(6);
     sorted.pushSorted(10);
     sorted.printList();
+
+    list.merge(sorted.getHead());
+    sorted.setHead(nullptr);
+
+    list.printList();
+    list.dropEveryOther();
+    list.printList();
+    list.dropEveryOtherRecursive(list.getHead());
+    list.printList();
 }

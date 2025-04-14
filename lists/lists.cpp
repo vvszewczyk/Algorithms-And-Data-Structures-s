@@ -27,6 +27,16 @@ class LinkedList
         }
     };
 
+    Node *getHead()
+    {
+        return this->head;
+    }
+
+    void setHead(Node *n)
+    {
+        this->head = n;
+    }
+
     void pushFront(int val)
     {
         Node *newNode = new Node(val);
@@ -199,20 +209,35 @@ class LinkedList
         {
             return;
         }
-
-        Node *prev = nullptr;
-        Node *curr = head;
-        Node *next = nullptr;
-
-        while (curr)
+        else
         {
-            next = curr->next;
-            curr->next = prev;
-            prev = curr;
-            curr = next;
+            Node *prev = nullptr;
+            Node *curr = head;
+            Node *next = nullptr;
+
+            while (curr)
+            {
+                next = curr->next;
+                curr->next = prev;
+                prev = curr;
+                curr = next;
+            }
+
+            head = prev;
+        }
+    }
+
+    Node *recursiveReverse(Node *h)
+    {
+        if (h == nullptr || h->next == nullptr)
+        {
+            return h;
         }
 
-        head = prev;
+        Node *res = recursiveReverse(h->next);
+        h->next->next = h;
+        h->next = nullptr;
+        return res;
     }
 
     void printList() const
@@ -226,6 +251,17 @@ class LinkedList
         }
 
         std::cout << "\n";
+    }
+
+    void printRecursive(Node *h, std::size_t index) const
+    {
+        if (h == nullptr)
+        {
+            return;
+        }
+
+        std::cout << "i: " << index++ << " value: " << h->value << "\n";
+        printRecursive(h->next, index);
     }
 };
 
@@ -253,6 +289,8 @@ int main()
 
     list.printList();
 
-    list.reverse();
+    // list.reverse();
+    //  list.printRecursive(list.getHead(), 0);
+    list.setHead(list.recursiveReverse(list.getHead()));
     list.printList();
 }

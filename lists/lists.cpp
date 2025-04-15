@@ -466,6 +466,82 @@ class LinkedList
         }
     }
 
+    void swapAllElementsWithNextOne()
+    {
+        if (head == nullptr || head->next == nullptr)
+        {
+            return;
+        }
+        else
+        {
+            Node *curr = head;
+            Node *prev = nullptr;
+            head = head->next; // Next element will be the first after swap
+
+            while (curr && curr->next)
+            {
+
+                Node *pom = curr->next;
+                Node *pomNext = curr->next->next;
+
+                curr->next = pomNext;
+                pom->next = curr;
+
+                if (prev)
+                {
+                    prev->next = pom;
+                }
+
+                prev = curr; // before we move to the next element remember previous element
+                curr = curr->next;
+            }
+        }
+    }
+
+    void swapElementBasedOnValue(int val)
+    {
+        if (head == nullptr)
+        {
+            return;
+        }
+        else
+        {
+            Node *curr = head;
+            Node *prev = nullptr;
+            while (curr->value != val)
+            {
+                prev = curr;
+
+                // Protection before missing value
+                if (curr->next)
+                {
+                    curr = curr->next;
+                }
+                else
+                {
+                    return;
+                }
+            }
+
+            if (curr && curr->next)
+            {
+                Node *tail = curr->next->next; // Rest of list after swapped element
+                Node *toSwap = curr->next;     // Element to be swapped with
+                toSwap->next = curr;
+                curr->next = tail;
+
+                if (prev)
+                {
+                    prev->next = toSwap;
+                }
+                else
+                {
+                    head = toSwap;
+                }
+            }
+        }
+    }
+
     void printList() const
     {
         Node *curr = head;
@@ -559,6 +635,9 @@ int main()
     list.pushAtIndex(0, 1);
     list.printList();
 
-    list.doubleListAtTheEnd();
+    list.swapAllElementsWithNextOne();
+    list.printList();
+
+    list.swapElementBasedOnValue(213);
     list.printList();
 }

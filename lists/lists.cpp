@@ -1,3 +1,4 @@
+#include "lists.hpp"
 #include <iostream>
 #include <vector>
 
@@ -542,6 +543,51 @@ class LinkedList
         }
     }
 
+    bool isPalindrome()
+    {
+        if (head && (head->next == nullptr))
+        {
+            return true;
+        }
+        else
+        {
+            Node *slow = head;
+            Node *fast = head;
+
+            while (fast && fast->next)
+            {
+                slow = slow->next;
+                fast = fast->next->next;
+            }
+
+            Node *prev = nullptr;
+            Node *nextNode = nullptr;
+
+            while (slow)
+            {
+                nextNode = slow->next;
+                slow->next = prev;
+                prev = slow;
+                slow = nextNode;
+            }
+
+            // prev is reversed second half of list
+            Node *curr = head;
+
+            while (prev)
+            {
+                if (prev->value != curr->value)
+                {
+                    return false;
+                }
+
+                prev = prev->next;
+                curr = curr->next;
+            }
+        }
+        return true;
+    }
+
     void printList() const
     {
         Node *curr = head;
@@ -640,4 +686,16 @@ int main()
 
     list.swapElementBasedOnValue(213);
     list.printList();
+
+    LinkedList list2;
+    list2.pushBack(1);
+    list2.pushBack(2);
+    list2.pushBack(3);
+    list2.pushBack(5);
+    list2.pushBack(3);
+    list2.pushBack(2);
+    list2.pushBack(1);
+    list2.printList();
+
+    std::cout << "Palindrome: " << list2.isPalindrome() << "\n";
 }

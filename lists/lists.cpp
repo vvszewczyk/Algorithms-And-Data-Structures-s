@@ -418,6 +418,54 @@ class LinkedList
         return head;
     }
 
+    void doubleList()
+    {
+        if (head == nullptr)
+        {
+            return;
+        }
+        else
+        {
+            Node *curr = head;
+            while (curr)
+            {
+                Node *newNode = new Node(curr->value);
+                Node *pom = curr->next;
+                curr->next = newNode;
+                newNode->next = pom;
+
+                curr = curr->next->next;
+            }
+        }
+    }
+
+    void doubleListAtTheEnd()
+    {
+        if (head == nullptr)
+        {
+            return;
+        }
+
+        Node *curr = head;
+        std::size_t sizeOfList = 1; // 1 because we finish while loop when curr->next is false, not when curr is false
+
+        while (curr->next)
+        {
+            sizeOfList++;
+            curr = curr->next;
+        }
+
+        Node *duplicated = head;
+        for (std::size_t i = 0; i < sizeOfList; ++i)
+        {
+            Node *newNode = new Node(duplicated->value);
+            curr->next = newNode;
+            newNode->next = nullptr;
+            curr = curr->next;
+            duplicated = duplicated->next;
+        }
+    }
+
     void printList() const
     {
         Node *curr = head;
@@ -506,5 +554,11 @@ int main()
     list.dropEveryOther();
     list.printList();
     list.dropEveryOtherRecursive(list.getHead());
+    list.printList();
+
+    list.pushAtIndex(0, 1);
+    list.printList();
+
+    list.doubleListAtTheEnd();
     list.printList();
 }

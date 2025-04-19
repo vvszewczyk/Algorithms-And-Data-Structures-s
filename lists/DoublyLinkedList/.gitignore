@@ -1,0 +1,51 @@
+# Ignore build results
+**/Debug/
+**/Release/
+**/x64/
+**/x86/
+**/ipch/
+**/Generated Files/
+
+# Ignore Visual Studio specific files
+*.exe
+*.obj
+*.lib
+*.pdb
+*.ipch
+*.log
+*.suo
+*.user
+*.VC.db
+*.VC.opendb
+*.idb
+*.tlog/
+*.lastbuildstate
+*.vscode/
+*.ncb
+*.aps
+*.cache
+*.ilk
+*.sln
+*.vcxproj
+*.vcxproj.filters
+
+# Precompiled headers
+DoublyLinkedListTests/pch.*
+
+packages/
+DoublyLinkedListTests/packages.config
+
+# Ignore CMake (in case you're using it)
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+
+# Ignore hidden system files
+.DS_Store
+Thumbs.db
+
+# Don't ignore your code!
+#!**/*.cpp
+#!**/*.h
+#!**/*.hpp

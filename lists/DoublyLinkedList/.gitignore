@@ -44,8 +44,3 @@ Makefile
 # Ignore hidden system files
 .DS_Store
 Thumbs.db
-
-# Don't ignore your code!
-#!**/*.cpp
-#!**/*.h
-#!**/*.hpp

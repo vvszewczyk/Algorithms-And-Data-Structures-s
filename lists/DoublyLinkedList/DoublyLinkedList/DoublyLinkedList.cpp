@@ -38,3 +38,24 @@ void DoublyLinkedList::pushFront(int val)
         head = newNode;
     }
 }
+
+void DoublyLinkedList::pushBack(int val)
+{
+    Node *newNode = new Node(val);
+
+    if (head == nullptr)
+    {
+        head = newNode;
+        return;
+    }
+
+    Node *curr = head;
+
+    while (curr->next)
+    {
+        curr = curr->next;
+    }
+
+    curr->next = newNode;
+    newNode->prev = curr;
+}

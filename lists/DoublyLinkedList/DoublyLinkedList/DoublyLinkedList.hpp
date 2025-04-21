@@ -21,4 +21,5 @@ class DoublyLinkedList
     ~DoublyLinkedList();
     Node *getHead() const;
     void pushFront(int val);
+    void pushBack(int val);
 };

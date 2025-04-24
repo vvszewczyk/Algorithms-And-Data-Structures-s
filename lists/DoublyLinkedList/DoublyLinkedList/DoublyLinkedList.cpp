@@ -21,6 +21,18 @@ DoublyLinkedList::Node *DoublyLinkedList::getHead() const
     return this->head;
 }
 
+void DoublyLinkedList::print() const
+{
+    Node *curr = head;
+    std::size_t index = 0;
+
+    while (curr)
+    {
+        std::cout << "i: " << index++ << " value: " << curr->value << "\n";
+    }
+    std::cout << "\n";
+}
+
 void DoublyLinkedList::pushFront(int val)
 {
     Node *newNode = new Node(val);
@@ -99,5 +111,29 @@ void DoublyLinkedList::pushAtPosition(int val, std::size_t position)
 
         curr->next = newNode;
         newNode->prev = curr;
+    }
+}
+
+void DoublyLinkedList::reverse()
+{
+    if (head == nullptr || head->next == nullptr)
+    {
+        return;
+    }
+    else
+    {
+        Node *curr = head;
+        Node *prev = nullptr;
+
+        while (curr)
+        {
+            Node *pom = curr->next;
+            curr->next = prev;
+            curr->prev = pom;
+            prev = curr;
+            curr = pom;
+        }
+
+        head = prev;
     }
 }

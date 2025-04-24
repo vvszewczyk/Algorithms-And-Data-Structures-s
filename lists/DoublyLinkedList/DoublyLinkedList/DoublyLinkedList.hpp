@@ -21,7 +21,9 @@ class DoublyLinkedList
     DoublyLinkedList();
     ~DoublyLinkedList();
     Node *getHead() const;
+    void print() const;
     void pushFront(int val);
     void pushBack(int val);
     void pushAtPosition(int val, std::size_t position);
+    void reverse();
 };

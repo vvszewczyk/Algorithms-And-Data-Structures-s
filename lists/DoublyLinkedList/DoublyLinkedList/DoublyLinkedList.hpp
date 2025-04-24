@@ -1,4 +1,5 @@
 #pragma once
+#include <cstddef>
 
 class DoublyLinkedList
 {
@@ -22,4 +23,5 @@ class DoublyLinkedList
     Node *getHead() const;
     void pushFront(int val);
     void pushBack(int val);
+    void pushAtPosition(int val, std::size_t position);
 };

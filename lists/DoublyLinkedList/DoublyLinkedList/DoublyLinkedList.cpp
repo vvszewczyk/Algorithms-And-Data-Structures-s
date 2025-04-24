@@ -59,3 +59,45 @@ void DoublyLinkedList::pushBack(int val)
     curr->next = newNode;
     newNode->prev = curr;
 }
+
+void DoublyLinkedList::pushAtPosition(int val, std::size_t position)
+{
+    Node *newNode = new Node(val);
+
+    if (head == nullptr)
+    {
+        head = newNode;
+        return;
+    }
+    else
+    {
+        Node *curr = head;
+
+        if (position == 0)
+        {
+            head = newNode;
+            newNode->next = curr;
+            curr->prev = newNode;
+            return;
+        }
+
+        std::size_t index = 0;
+        while (curr->next)
+        {
+            if (index == position - 1)
+            {
+                Node *pom = curr->next;
+                curr->next = newNode;
+                newNode->prev = curr;
+                newNode->next = pom;
+                pom->prev = newNode;
+                return;
+            }
+            curr = curr->next;
+            index++;
+        }
+
+        curr->next = newNode;
+        newNode->prev = curr;
+    }
+}

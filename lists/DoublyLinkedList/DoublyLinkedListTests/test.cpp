@@ -105,3 +105,70 @@ TEST(DoublyLinkedListTests, PushAtVariousPosition)
 
     EXPECT_EQ(curr, nullptr);
 }
+
+TEST(DoublyLinkedListTests, reverseEmpty)
+{
+    DoublyLinkedList list;
+    DoublyLinkedList::Node *head = list.getHead();
+    EXPECT_EQ(head, nullptr);
+    list.reverse();
+    EXPECT_EQ(head, nullptr);
+}
+
+TEST(DoublyLinkedListTests, reverseOneElement)
+{
+    DoublyLinkedList list;
+    list.pushBack(10);
+    DoublyLinkedList::Node *head = list.getHead();
+    ASSERT_NE(head, nullptr);
+    EXPECT_EQ(head->value, 10);
+    EXPECT_EQ(head->next, nullptr);
+    EXPECT_EQ(head->prev, nullptr);
+    list.reverse();
+    EXPECT_EQ(head->value, 10);
+    EXPECT_EQ(head->next, nullptr);
+    EXPECT_EQ(head->prev, nullptr);
+}
+
+TEST(DoublyLinkedListTests, reverseMultipleElements)
+{
+    DoublyLinkedList list;
+    list.pushBack(10);
+    list.pushBack(20);
+    list.pushBack(30);
+
+    list.reverse();
+    DoublyLinkedList::Node *curr = list.getHead();
+    std::vector<int> expected = {30, 20, 10};
+
+    for (int &value : expected)
+    {
+        ASSERT_NE(curr, nullptr);
+        EXPECT_EQ(curr->value, value);
+        curr = curr->next;
+    }
+
+    EXPECT_EQ(curr, nullptr);
+}
+
+TEST(DoublyLinkedListTests, doubleReverseMultipleElements)
+{
+    DoublyLinkedList list;
+    list.pushBack(10);
+    list.pushBack(20);
+    list.pushBack(30);
+
+    list.reverse();
+    list.reverse();
+    DoublyLinkedList::Node *curr = list.getHead();
+    std::vector<int> expected = {10, 20, 30};
+
+    for (int &value : expected)
+    {
+        ASSERT_NE(curr, nullptr);
+        EXPECT_EQ(curr->value, value);
+        curr = curr->next;
+    }
+
+    EXPECT_EQ(curr, nullptr);
+}

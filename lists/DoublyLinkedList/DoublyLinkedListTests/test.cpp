@@ -67,3 +67,41 @@ TEST(DoublyLinkedListTests, PushBackAddMultiple)
     EXPECT_EQ(head->next->next->prev->value, 20);
     EXPECT_EQ(head->next->next->next, nullptr);
 }
+
+TEST(DoublyLinkedListTests, PushAtPositionWhenHeadEmpty)
+{
+    DoublyLinkedList list;
+    DoublyLinkedList::Node *head = list.getHead();
+    ASSERT_EQ(head, nullptr);
+    list.pushAtPosition(1337, 1337);
+    head = list.getHead();
+    ASSERT_NE(head, nullptr);
+    EXPECT_EQ(head->value, 1337);
+    EXPECT_EQ(head->next, nullptr);
+    EXPECT_EQ(head->prev, nullptr);
+}
+
+TEST(DoublyLinkedListTests, PushAtVariousPosition)
+{
+    DoublyLinkedList list;
+    std::vector<std::pair<int, std::size_t>> data = {
+        {10, 0}, {20, 1}, {30, 1}, {40, 100}, {50, 0},
+    };
+
+    for (std::pair<int, std::size_t> &pair : data)
+    {
+        list.pushAtPosition(pair.first, pair.second);
+    }
+
+    DoublyLinkedList::Node *curr = list.getHead();
+    std::vector<int> expected = {50, 10, 30, 20, 40};
+
+    for (int &value : expected)
+    {
+        ASSERT_NE(curr, nullptr);
+        EXPECT_EQ(curr->value, value);
+        curr = curr->next;
+    }
+
+    EXPECT_EQ(curr, nullptr);
+}

@@ -51,6 +51,26 @@ void DoublyLinkedList::pushFront(int val)
     }
 }
 
+void DoublyLinkedList::popFront()
+{
+    if (head == nullptr)
+    {
+        return;
+    }
+    else
+    {
+        Node *toDelete = head;
+        head = head->next;
+
+        if (head != nullptr)
+        {
+            head->prev = nullptr;
+        }
+
+        delete toDelete;
+    }
+}
+
 void DoublyLinkedList::pushBack(int val)
 {
     Node *newNode = new Node(val);

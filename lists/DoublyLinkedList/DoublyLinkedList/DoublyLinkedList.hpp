@@ -23,6 +23,7 @@ class DoublyLinkedList
     Node *getHead() const;
     void print() const;
     void pushFront(int val);
+    void popFront();
     void pushBack(int val);
     void pushAtPosition(int val, std::size_t position);
     void reverse();

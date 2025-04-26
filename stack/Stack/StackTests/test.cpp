@@ -46,3 +46,39 @@ TEST(StackTests, Pop)
     }
     EXPECT_EQ(top, nullptr);
 }
+
+TEST(StackTests, IsEmpty)
+{
+    Stack stack;
+    stack.push(10);
+    stack.push(20);
+    stack.push(30);
+
+    Stack::Node *top = stack.getTop();
+    ASSERT_NE(top, nullptr);
+    EXPECT_EQ(stack.isEmpty(), false);
+    stack.pop();
+    stack.pop();
+    EXPECT_EQ(stack.isEmpty(), false);
+    stack.pop();
+    EXPECT_EQ(stack.isEmpty(), true);
+}
+
+TEST(StackTests, Peek)
+{
+    Stack stack;
+    stack.push(10);
+    stack.push(20);
+    stack.push(30);
+
+    Stack::Node *top = stack.getTop();
+    ASSERT_NE(top, nullptr);
+    EXPECT_EQ(top->value, 30);
+    stack.pop();
+    top = stack.getTop();
+    EXPECT_EQ(top->value, 20);
+    stack.push(20);
+    stack.push(130);
+    top = stack.getTop();
+    EXPECT_EQ(top->value, 130);
+}

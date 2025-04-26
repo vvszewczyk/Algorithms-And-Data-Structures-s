@@ -82,6 +82,27 @@ TEST(DoublyLinkedListTests, PushBackAddMultiple)
     EXPECT_EQ(head->next->next->prev->value, 20);
     EXPECT_EQ(head->next->next->next, nullptr);
 }
+
+TEST(DoublyLinkedListTests, PopBackCorrectly)
+{
+    DoublyLinkedList list;
+    list.pushBack(10);
+    list.pushBack(20);
+    list.pushBack(30);
+
+    list.popBack();
+    DoublyLinkedList::Node *curr = list.getHead();
+    std::vector<int> expected = {10, 20};
+
+    for (int &value : expected)
+    {
+        ASSERT_NE(curr, nullptr) << "Unexpected nullptr while checking value " << value;
+        EXPECT_EQ(curr->value, value) << "Mismatch at value: expected " << value;
+        curr = curr->next;
+    }
+
+    EXPECT_EQ(curr, nullptr) << "List should end with nullptr";
+}
 TEST(DoublyLinkedListTests, PushAtPositionWhenHeadEmpty)
 {
     DoublyLinkedList list;
@@ -117,6 +138,26 @@ TEST(DoublyLinkedListTests, PushAtVariousPosition)
     }
 
     EXPECT_EQ(curr, nullptr);
+}
+TEST(DoublyLinkedListTests, PopAtPositionCorrectly)
+{
+    DoublyLinkedList list;
+    list.pushBack(10);
+    list.pushBack(20);
+    list.pushBack(30);
+
+    list.removeAtPosition(1);
+    DoublyLinkedList::Node *curr = list.getHead();
+    std::vector<int> expected = {10, 30};
+
+    for (int &value : expected)
+    {
+        ASSERT_NE(curr, nullptr) << "Unexpected nullptr while checking value " << value;
+        EXPECT_EQ(curr->value, value) << "Mismatch at value: expected " << value;
+        curr = curr->next;
+    }
+
+    EXPECT_EQ(curr, nullptr) << "List should end with nullptr";
 }
 TEST(DoublyLinkedListTests, reverseEmpty)
 {

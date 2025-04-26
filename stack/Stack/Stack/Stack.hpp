@@ -24,4 +24,5 @@ class Stack
     bool isEmpty() const;
     int peek() const;
     std::size_t size() const;
+    void reverse();
 };

@@ -72,3 +72,25 @@ std::size_t Stack::size() const
 
     return counter;
 }
+
+void Stack::reverse()
+{
+    if (top == nullptr)
+    {
+        throw std::out_of_range("Cannot reverse empty stack.");
+    }
+
+    Node *prev = nullptr;
+    Node *curr = top;
+    Node *next = nullptr;
+
+    while (curr)
+    {
+        next = curr->next;
+        curr->next = prev;
+        prev = curr;
+        curr = next;
+    }
+
+    top = prev;
+}

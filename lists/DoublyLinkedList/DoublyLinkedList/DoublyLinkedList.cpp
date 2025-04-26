@@ -92,6 +92,34 @@ void DoublyLinkedList::pushBack(int val)
     newNode->prev = curr;
 }
 
+void DoublyLinkedList::popBack()
+{
+    if (head == nullptr)
+    {
+        return;
+    }
+    else
+    {
+        Node *curr = head;
+        while (curr->next)
+        {
+            curr = curr->next;
+        }
+
+        Node *toDelete = curr;
+        if (curr->prev != nullptr)
+        {
+            Node *newLast = curr->prev;
+            newLast->next = nullptr;
+        }
+        else
+        {
+            head = nullptr;
+        }
+        delete toDelete;
+    }
+}
+
 void DoublyLinkedList::pushAtPosition(int val, std::size_t position)
 {
     Node *newNode = new Node(val);

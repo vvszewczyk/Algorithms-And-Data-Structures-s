@@ -25,6 +25,7 @@ class DoublyLinkedList
     void pushFront(int val);
     void popFront();
     void pushBack(int val);
+    void popBack();
     void pushAtPosition(int val, std::size_t position);
     void reverse();
 };

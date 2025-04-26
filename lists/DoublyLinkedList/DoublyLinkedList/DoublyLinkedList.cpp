@@ -238,7 +238,7 @@ void DoublyLinkedList::reverse()
     }
 }
 
-DoublyLinkedList::Node *DoublyLinkedList::find(int val)
+DoublyLinkedList::Node *DoublyLinkedList::find(int val) const
 {
     if (head == nullptr)
     {
@@ -259,4 +259,17 @@ DoublyLinkedList::Node *DoublyLinkedList::find(int val)
     }
 
     return nullptr;
+}
+
+std::size_t DoublyLinkedList::size() const
+{
+    std::size_t counter = 0;
+    Node *curr = head;
+    while (curr)
+    {
+        counter++;
+        curr = curr->next;
+    }
+
+    return counter;
 }

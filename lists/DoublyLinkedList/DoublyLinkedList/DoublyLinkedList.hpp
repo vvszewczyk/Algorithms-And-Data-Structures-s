@@ -29,5 +29,6 @@ class DoublyLinkedList
     void pushAtPosition(int val, std::size_t position);
     void removeAtPosition(std::size_t position);
     void reverse();
-    Node *find(int val);
+    Node *find(int val) const;
+    std::size_t size() const;
 };

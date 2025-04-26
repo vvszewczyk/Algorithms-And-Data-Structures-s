@@ -22,7 +22,6 @@ TEST(StackTests, Push)
     }
     EXPECT_EQ(top, nullptr);
 }
-
 TEST(StackTests, Pop)
 {
     Stack stack;
@@ -46,7 +45,6 @@ TEST(StackTests, Pop)
     }
     EXPECT_EQ(top, nullptr);
 }
-
 TEST(StackTests, IsEmpty)
 {
     Stack stack;
@@ -63,7 +61,6 @@ TEST(StackTests, IsEmpty)
     stack.pop();
     EXPECT_EQ(stack.isEmpty(), true);
 }
-
 TEST(StackTests, Peek)
 {
     Stack stack;
@@ -81,4 +78,24 @@ TEST(StackTests, Peek)
     stack.push(130);
     top = stack.getTop();
     EXPECT_EQ(top->value, 130);
+}
+
+TEST(StackTests, reverse)
+{
+    Stack stack;
+    stack.push(10);
+    stack.push(20);
+    stack.push(30);
+    stack.reverse();
+    Stack::Node *top = stack.getTop();
+    std::vector<int> expected = {10, 20, 30};
+
+    for (int &value : expected)
+    {
+        ASSERT_NE(top, nullptr);
+        EXPECT_EQ(top->value, value);
+        stack.pop();
+        top = stack.getTop();
+    }
+    EXPECT_EQ(top, nullptr);
 }

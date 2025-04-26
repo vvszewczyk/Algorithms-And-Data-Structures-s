@@ -82,7 +82,6 @@ TEST(DoublyLinkedListTests, PushBackAddMultiple)
     EXPECT_EQ(head->next->next->prev->value, 20);
     EXPECT_EQ(head->next->next->next, nullptr);
 }
-
 TEST(DoublyLinkedListTests, PopBackCorrectly)
 {
     DoublyLinkedList list;
@@ -159,7 +158,7 @@ TEST(DoublyLinkedListTests, PopAtPositionCorrectly)
 
     EXPECT_EQ(curr, nullptr) << "List should end with nullptr";
 }
-TEST(DoublyLinkedListTests, reverseEmpty)
+TEST(DoublyLinkedListTests, ReverseEmpty)
 {
     DoublyLinkedList list;
     DoublyLinkedList::Node *head = list.getHead();
@@ -167,7 +166,7 @@ TEST(DoublyLinkedListTests, reverseEmpty)
     list.reverse();
     EXPECT_EQ(head, nullptr);
 }
-TEST(DoublyLinkedListTests, reverseOneElement)
+TEST(DoublyLinkedListTests, ReverseOneElement)
 {
     DoublyLinkedList list;
     list.pushBack(10);
@@ -181,7 +180,7 @@ TEST(DoublyLinkedListTests, reverseOneElement)
     EXPECT_EQ(head->next, nullptr);
     EXPECT_EQ(head->prev, nullptr);
 }
-TEST(DoublyLinkedListTests, reverseMultipleElements)
+TEST(DoublyLinkedListTests, ReverseMultipleElements)
 {
     DoublyLinkedList list;
     list.pushBack(10);
@@ -201,7 +200,7 @@ TEST(DoublyLinkedListTests, reverseMultipleElements)
 
     EXPECT_EQ(curr, nullptr) << "List should end with nullptr";
 }
-TEST(DoublyLinkedListTests, doubleReverseMultipleElements)
+TEST(DoublyLinkedListTests, DoubleReverseMultipleElements)
 {
     DoublyLinkedList list;
     list.pushBack(10);
@@ -221,4 +220,27 @@ TEST(DoublyLinkedListTests, doubleReverseMultipleElements)
     }
 
     EXPECT_EQ(curr, nullptr) << "List should end with nullptr";
+}
+TEST(DoublyLinkedListTests, Find)
+{
+    DoublyLinkedList list;
+    list.pushBack(10);
+    list.pushBack(20);
+    list.pushBack(30);
+
+    DoublyLinkedList::Node *res1 = list.find(20);
+    DoublyLinkedList::Node *res2 = list.find(30);
+    DoublyLinkedList::Node *res3 = list.find(10);
+
+    const std::vector<DoublyLinkedList::Node *> found = {res1, res2, res3};
+    const std::vector<int> value = {20, 30, 10};
+
+    for (std::size_t i = 0; i < found.size(); ++i)
+    {
+        ASSERT_NE(found[i], nullptr) << "Unexpected nullptr while checking value " << value[i];
+        EXPECT_EQ(found[i]->value, value[i]) << "Mismatch at value: expected " << value[i];
+    }
+
+    DoublyLinkedList::Node *unknown = list.find(1337);
+    ASSERT_EQ(unknown, nullptr) << "Unknown should point at nullptr";
 }

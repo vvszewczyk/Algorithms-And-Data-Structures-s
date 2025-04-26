@@ -162,6 +162,58 @@ void DoublyLinkedList::pushAtPosition(int val, std::size_t position)
     }
 }
 
+void DoublyLinkedList::removeAtPosition(std::size_t position)
+{
+    if (head == nullptr)
+    {
+        return;
+    }
+    else
+    {
+        if (position == 0)
+        {
+            Node *toDelete = head;
+            head = head->next;
+            if (head != nullptr)
+            {
+                head->prev = nullptr;
+            }
+            delete toDelete;
+            return;
+        }
+        else
+        {
+            std::size_t index = 0;
+            Node *curr = head;
+            while (curr)
+            {
+                if (index == position)
+                {
+                    Node *toDelete = curr;
+                    Node *prev = curr->prev;
+                    Node *next = curr->next;
+
+                    if (prev != nullptr)
+                    {
+                        prev->next = next;
+                    }
+
+                    if (next != nullptr)
+                    {
+                        next->prev = prev;
+                    }
+
+                    delete toDelete;
+                    return;
+                }
+
+                index++;
+                curr = curr->next;
+            }
+        }
+    }
+}
+
 void DoublyLinkedList::reverse()
 {
     if (head == nullptr || head->next == nullptr)
@@ -184,4 +236,27 @@ void DoublyLinkedList::reverse()
 
         head = prev;
     }
+}
+
+DoublyLinkedList::Node *DoublyLinkedList::find(int val)
+{
+    if (head == nullptr)
+    {
+        return nullptr;
+    }
+    else
+    {
+        Node *curr = head;
+        while (curr)
+        {
+            if (curr->value == val)
+            {
+                return curr;
+            }
+
+            curr = curr->next;
+        }
+    }
+
+    return nullptr;
 }

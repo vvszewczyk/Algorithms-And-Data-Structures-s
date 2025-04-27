@@ -25,4 +25,5 @@ class Stack
     int peek() const;
     std::size_t size() const;
     void reverse();
+    void sort();
 };

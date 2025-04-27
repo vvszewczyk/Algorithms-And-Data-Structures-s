@@ -94,3 +94,29 @@ void Stack::reverse()
 
     top = prev;
 }
+
+void Stack::sort()
+{
+    Stack newStack;
+    while (!this->isEmpty())
+    {
+        int curr = this->peek();
+        this->pop();
+
+        while (!newStack.isEmpty() && newStack.peek() > curr)
+        {
+            this->push(newStack.peek());
+            newStack.pop();
+        }
+
+        newStack.push(curr);
+    }
+
+    this->top = nullptr;
+
+    while (!newStack.isEmpty())
+    {
+        this->push(newStack.peek());
+        newStack.pop();
+    }
+}

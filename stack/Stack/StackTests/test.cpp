@@ -99,3 +99,27 @@ TEST(StackTests, reverse)
     }
     EXPECT_EQ(top, nullptr);
 }
+
+TEST(StackTests, Sort)
+{
+    Stack stack;
+    stack.push(3);
+    stack.push(1);
+    stack.push(4);
+    stack.push(2);
+    stack.push(5);
+
+    stack.sort();
+
+    Stack::Node *top = stack.getTop();
+    std::vector<int> expected = {1, 2, 3, 4, 5};
+
+    for (int expectedValue : expected)
+    {
+        ASSERT_NE(top, nullptr);
+        EXPECT_EQ(top->value, expectedValue);
+        top = top->next;
+    }
+
+    EXPECT_EQ(top, nullptr);
+}
